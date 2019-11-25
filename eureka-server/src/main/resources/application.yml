@@ -1,0 +1,16 @@
+server:
+  port: 8182
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  host: 127.0.0.1
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.host:localhost}:${server.port:8182}/eureka/
