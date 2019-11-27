@@ -21,7 +21,7 @@ import java.util.List;
  * @Version: microservice 1.0
  */
 @Service
-public class BaseUserService implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
     private UsersDao usersDao;

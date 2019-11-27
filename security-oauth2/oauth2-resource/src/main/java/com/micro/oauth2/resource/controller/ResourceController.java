@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ResourceController {
 
     @GetMapping("/user/resource")
-    @PreAuthorize("hasAuthority('p1')")
+    @PreAuthorize("hasAuthority('p2')")
     public String userResource(){
         return "获取资源成功";
     }

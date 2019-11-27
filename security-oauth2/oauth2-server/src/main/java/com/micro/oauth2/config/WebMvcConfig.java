@@ -22,7 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         //registry.addViewController("/").setViewName("redirect:/login");  //security默认提供的页面
-        registry.addViewController("/login").setViewName("oauth_login"); //自定义页面
+        //registry.addViewController("/login").setViewName("oauth_login"); //自定义页面
     }
 
 }

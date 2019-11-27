@@ -17,7 +17,7 @@ public class OauthTest {
     @Test
     public void test(){
        //String pwd = new BCryptPasswordEncoder().encode("123");
-        String pwd = PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("123");
+        String pwd = PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("secret");
         System.out.println(pwd);
     }
 }

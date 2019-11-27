@@ -11,4 +11,4 @@ eureka:
   host: 127.0.0.1
   client:
     service-url:
-      defaultZone: http://${eureka.host:localhost}:${server.port:8182}/eureka/
+      defaultZone: http://${eureka.host:localhost}:${eureka.port:8182}/eureka/

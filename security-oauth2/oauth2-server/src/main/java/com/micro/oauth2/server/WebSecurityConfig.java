@@ -1,5 +1,6 @@
 package com.micro.oauth2.server;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,10 +30,18 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
+    @Autowired
+    private UserDetailsService userDetailsServiceImpl;
+
+    /**
+     * 自定义用户信息
+     * @param auth
+     * @throws Exception
+     */
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
-    }
+        auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
+    }*/
 
     /**
      * 认证管理器（资源所有者以密码方式授权）
@@ -98,8 +107,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
-                .formLogin()
-                .loginProcessingUrl("/user/login")
+                .formLogin();
+                /*.loginProcessingUrl("/user/login")
                 .loginPage("/login")
                 .successForwardUrl("/Home")
                 .and()
@@ -108,6 +117,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutUrl("/exit")
-                .logoutSuccessUrl("/login?exit");
+                .logoutSuccessUrl("/login?exit");*/
     }
 }

@@ -1,5 +1,6 @@
 package com.micro.oauth2.resource.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /**
  * @Author: daiguoqing
@@ -23,6 +25,9 @@ public class Oauth2ResourceServiceConfig extends ResourceServerConfigurerAdapter
 
     public static final String RESOURCE_ID = "resource1";
 
+    @Autowired
+    private TokenStore tokenStore;
+
     public Oauth2ResourceServiceConfig() {
         super();
     }
@@ -30,6 +35,7 @@ public class Oauth2ResourceServiceConfig extends ResourceServerConfigurerAdapter
     /**
      * @resourceId 资源id（在server中配置的resourceIds）
      * @tokenServices 验证令牌是否合法
+     * @tokenStore 验证JWT token合法性
      * @stateless
      * @param resources
      * @throws Exception
@@ -37,12 +43,13 @@ public class Oauth2ResourceServiceConfig extends ResourceServerConfigurerAdapter
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.resourceId(RESOURCE_ID)
-                .tokenServices(tokenService())
+                //.tokenServices(tokenService())
+                .tokenStore(tokenStore)
                 .stateless(true);
     }
 
     /**
-     * 拦截请求校验客户端权限
+     * 拦截请求校验客户端访问范围
      * @param http
      * @throws Exception
      */
@@ -60,12 +67,12 @@ public class Oauth2ResourceServiceConfig extends ResourceServerConfigurerAdapter
      * 远程请求授权服务器校验token
      * @return
      */
-    @Bean
+    /*@Bean
     public ResourceServerTokenServices tokenService(){
         RemoteTokenServices service = new RemoteTokenServices();
         service.setCheckTokenEndpointUrl("http://127.0.0.1:8081/oauth/check_token");
         service.setClientId("client1");
         service.setClientSecret("secret");
         return service;
-    }
+    }*/
 }
