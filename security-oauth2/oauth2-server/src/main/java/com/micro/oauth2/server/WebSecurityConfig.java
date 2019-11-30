@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -88,8 +89,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @anyRequest 其他请求
      * @permitAll 无条件允许访问 会给用户适配一个Token，方便处理
      * @formLogin 允许表单登录
-     * @loginProcessingUrl 表单提交的路径
-     * @loginPage 没有权限访问页面（认证失败）后回调的地址
+     * @loginProcessingUrl 指定security认证的拦截处理路径，覆盖默认路径（默认：/login  post）
+     * @loginPage 需要身份验证时的重定向页面
      * @successForwardUrl 自定义登录成功的页面地址 转发
      * @sessionManagement security的会话管理
      * @logout 退出登录
@@ -103,14 +104,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/adminDetails").hasAuthority("p1")
-                .antMatchers("/admin/**").authenticated()
-                .anyRequest().permitAll()
+                /*.antMatchers("/admin/adminDetails").hasAuthority("p1")
+                .antMatchers("/admin/**").authenticated()*/
+                .antMatchers(new String[]{"/auth/login", "/auth/authorize"}).permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin();
-                /*.loginProcessingUrl("/user/login")
-                .loginPage("/login")
-                .successForwardUrl("/Home")
+                .formLogin()
+                .loginProcessingUrl("/auth/authorize")
+                .loginPage("/auth/login");
+               /* .successForwardUrl("/Home")
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
@@ -118,5 +120,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/exit")
                 .logoutSuccessUrl("/login?exit");*/
+    }
+
+    /**
+     * 静态资源拦截
+     * @param web
+     * @throws Exception
+     */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+
     }
 }

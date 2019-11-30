@@ -12,3 +12,16 @@ eureka:
   client:
     service-url:
       defaultZone: http://${eureka.host:localhost}:${eureka.port:8182}/eureka/
+
+zuul:
+  host:
+    connect-timeout-millis: 15000 #HTTP连接超时要比Hystrix的大
+    socket-timeout-millis: 60000   #socket超时
+  ignored-services: "*"
+  routes:
+    oauth2-service:
+      serviceId: oauth2-server
+      path: /api-authorization/**
+    message-service:
+      serviceId: micro-message-service
+      path: /api-message/**

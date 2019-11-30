@@ -10,7 +10,7 @@
 <body>
    <!--这里是一个坑，input的name名字要是声明为username password，否则security获取不到-->
     <h1>welcome</h1>
-     <form action="/user/login" method="post">
+     <form action="/auth/authorize" method="post">
          <input type="text" name="username" id="" class="loginName">
          <input type="text" name="password" id="" class="password">
          <input type="submit" value="登录">

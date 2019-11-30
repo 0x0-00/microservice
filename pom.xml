@@ -17,6 +17,7 @@
         <module>security-oauth2</module>
         <module>eureka-server</module>
         <module>micro-gateway</module>
+        <module>micro-modules</module>
     </modules>
 
     <packaging>pom</packaging>

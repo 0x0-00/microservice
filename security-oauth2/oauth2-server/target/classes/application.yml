@@ -11,12 +11,17 @@ spring:
     cache: false
     encoding: UTF-8
     template-loader-path: classpath:/templates
+  #thymeleaf:
+    #suffix: .html
+    #cache: false
+    #encoding: UTF-8
+    #prefix: classpath:/templates
 
 eureka:
   host: 127.0.0.1
   client:
     service-url:
-      defaultZone: http://${eureka.host:localhost}:${server.port:8182}/eureka/
+      defaultZone: http://${eureka.host:localhost}:${eureka.port:8182}/eureka/
 
 mybatis:
   mapper-locations: classpath:/mapper/**
